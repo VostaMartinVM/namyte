@@ -1,0 +1,62 @@
+.activitiesList {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+.activityRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+
+  &:nth-child(even) .activityImage {
+    order: 2;
+  }
+
+  @media (max-width: 800px) {
+    grid-template-columns: 1fr;
+    gap: 20px;
+
+    &:nth-child(even) .activityImage {
+      order: 0;
+    }
+  }
+}
+
+.activityImage {
+  display: block;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  aspect-ratio: 16 / 10;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+  }
+
+  &:hover img {
+    transform: scale(1.05);
+  }
+}
+
+.activitySkeleton {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+}
+
+.activityContent {
+  h2 {
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+  }
+
+  p {
+    color: var(--color-ink-soft);
+    margin-bottom: 20px;
+  }
+}

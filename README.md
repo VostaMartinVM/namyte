@@ -1,46 +1,51 @@
-# Getting Started with Create React App
+# Penzion a Restaurace Na Mýtě
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Website for a family-run guesthouse and restaurant in Sezimovo Ústí (near Tábor, Czech Republic).
 
-## Available Scripts
+Built with React 18 + TypeScript (Create React App), SCSS, framer-motion, and Firebase (Firestore for translated content, Storage for images and menu PDFs, Auth for the admin area).
 
-In the project directory, you can run:
+## Pages
 
-### `yarn start`
+| Route         | Description                                                            |
+| ------------- | ---------------------------------------------------------------------- |
+| `/`           | Home — hero slider, introduction, and the daily & weekend menus (PDF) |
+| `/menu`       | Full restaurant menu, grouped by category                              |
+| `/rooms`      | Accommodation info, photos, and Booking.com link                       |
+| `/gallery`    | Photo gallery with lightbox                                            |
+| `/activities` | Things to do in the area                                               |
+| `/contact`    | Address, phone, e-mail, and map                                        |
+| `/login`      | Admin sign-in                                                          |
+| `/admin`      | Upload/replace the daily and weekend menu PDFs (auth required)         |
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The old Czech routes (`/DenniNabidka`, `/NabidkaJidel`, `/Ubytovani`, `/Galerie`, `/Aktivity`, `/Onas`) redirect to their English equivalents.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Project structure
 
-### `yarn test`
+```
+src/
+  components/   Shared UI (Navbar, Footer, ImageSlider, Lightbox, PdfViewer, ...)
+  context/      LanguageContext (cs / en / de, persisted to localStorage)
+  i18n/         Static UI strings for all three languages
+  pages/        One folder per route
+  services/     Firebase initialization and data access
+  styles/       Global styles and design tokens (CSS custom properties)
+  types/        Shared TypeScript types
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Content the owner edits (page texts, menu items) lives in Firestore under
+`translation_collection_path`; images and menu PDFs live in Firebase Storage.
+The Firestore document ids and Storage folder names are kept in their original
+Czech form because they refer to existing server-side data.
 
-### `yarn build`
+## Setup
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Create a `.env` file with the Firebase web app configuration
+(`REACT_APP_FIREBASE_API_KEY`, `REACT_APP_FIREBASE_AUTH_DOMAIN`, `REACT_APP_FIREBASE_PROJECTID`,
+`REACT_APP_FIREBASE_STORAGE_BUCKET`, `REACT_APP_FIREBASE_MESSAGING_SENDER_ID`,
+`REACT_APP_FIREBASE_APP_ID`, `REACT_APP_FIREBASE_MEASUREMENT_ID`), then:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+npm install
+npm start        # development server on http://localhost:3000
+npm run build    # production build into build/
+```
